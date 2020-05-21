@@ -1,0 +1,595 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF6CA90F2476717700ECE3D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA90E2476717700ECE3D8 /* AppDelegate.swift */; };
+		FF6CA9112476717700ECE3D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA9102476717700ECE3D8 /* SceneDelegate.swift */; };
+		FF6CA9132476717700ECE3D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA9122476717700ECE3D8 /* ViewController.swift */; };
+		FF6CA9162476717700ECE3D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF6CA9142476717700ECE3D8 /* Main.storyboard */; };
+		FF6CA9182476717900ECE3D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF6CA9172476717900ECE3D8 /* Assets.xcassets */; };
+		FF6CA91B2476717900ECE3D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF6CA9192476717900ECE3D8 /* LaunchScreen.storyboard */; };
+		FF6CA9262476717900ECE3D8 /* DrivsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA9252476717900ECE3D8 /* DrivsTests.swift */; };
+		FF6CA9312476717900ECE3D8 /* DrivsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA9302476717900ECE3D8 /* DrivsUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF6CA9222476717900ECE3D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF6CA9032476717700ECE3D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF6CA90A2476717700ECE3D8;
+			remoteInfo = Drivs;
+		};
+		FF6CA92D2476717900ECE3D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF6CA9032476717700ECE3D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF6CA90A2476717700ECE3D8;
+			remoteInfo = Drivs;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FF6CA90B2476717700ECE3D8 /* Drivs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drivs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6CA90E2476717700ECE3D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FF6CA9102476717700ECE3D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		FF6CA9122476717700ECE3D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FF6CA9152476717700ECE3D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF6CA9172476717900ECE3D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF6CA91A2476717900ECE3D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FF6CA91C2476717900ECE3D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF6CA9212476717900ECE3D8 /* DrivsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrivsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6CA9252476717900ECE3D8 /* DrivsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivsTests.swift; sourceTree = "<group>"; };
+		FF6CA9272476717900ECE3D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF6CA92C2476717900ECE3D8 /* DrivsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrivsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6CA9302476717900ECE3D8 /* DrivsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivsUITests.swift; sourceTree = "<group>"; };
+		FF6CA9322476717900ECE3D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF6CA9082476717700ECE3D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CA91E2476717900ECE3D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CA9292476717900ECE3D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF6CA9022476717700ECE3D8 = {
+			isa = PBXGroup;
+			children = (
+				FF6CA90D2476717700ECE3D8 /* Drivs */,
+				FF6CA9242476717900ECE3D8 /* DrivsTests */,
+				FF6CA92F2476717900ECE3D8 /* DrivsUITests */,
+				FF6CA90C2476717700ECE3D8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF6CA90C2476717700ECE3D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF6CA90B2476717700ECE3D8 /* Drivs.app */,
+				FF6CA9212476717900ECE3D8 /* DrivsTests.xctest */,
+				FF6CA92C2476717900ECE3D8 /* DrivsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF6CA90D2476717700ECE3D8 /* Drivs */ = {
+			isa = PBXGroup;
+			children = (
+				FF6CA90E2476717700ECE3D8 /* AppDelegate.swift */,
+				FF6CA9102476717700ECE3D8 /* SceneDelegate.swift */,
+				FF6CA9122476717700ECE3D8 /* ViewController.swift */,
+				FF6CA9142476717700ECE3D8 /* Main.storyboard */,
+				FF6CA9172476717900ECE3D8 /* Assets.xcassets */,
+				FF6CA9192476717900ECE3D8 /* LaunchScreen.storyboard */,
+				FF6CA91C2476717900ECE3D8 /* Info.plist */,
+			);
+			path = Drivs;
+			sourceTree = "<group>";
+		};
+		FF6CA9242476717900ECE3D8 /* DrivsTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF6CA9252476717900ECE3D8 /* DrivsTests.swift */,
+				FF6CA9272476717900ECE3D8 /* Info.plist */,
+			);
+			path = DrivsTests;
+			sourceTree = "<group>";
+		};
+		FF6CA92F2476717900ECE3D8 /* DrivsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FF6CA9302476717900ECE3D8 /* DrivsUITests.swift */,
+				FF6CA9322476717900ECE3D8 /* Info.plist */,
+			);
+			path = DrivsUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF6CA90A2476717700ECE3D8 /* Drivs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF6CA9352476717900ECE3D8 /* Build configuration list for PBXNativeTarget "Drivs" */;
+			buildPhases = (
+				FF6CA9072476717700ECE3D8 /* Sources */,
+				FF6CA9082476717700ECE3D8 /* Frameworks */,
+				FF6CA9092476717700ECE3D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Drivs;
+			productName = Drivs;
+			productReference = FF6CA90B2476717700ECE3D8 /* Drivs.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FF6CA9202476717900ECE3D8 /* DrivsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF6CA9382476717900ECE3D8 /* Build configuration list for PBXNativeTarget "DrivsTests" */;
+			buildPhases = (
+				FF6CA91D2476717900ECE3D8 /* Sources */,
+				FF6CA91E2476717900ECE3D8 /* Frameworks */,
+				FF6CA91F2476717900ECE3D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF6CA9232476717900ECE3D8 /* PBXTargetDependency */,
+			);
+			name = DrivsTests;
+			productName = DrivsTests;
+			productReference = FF6CA9212476717900ECE3D8 /* DrivsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FF6CA92B2476717900ECE3D8 /* DrivsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF6CA93B2476717900ECE3D8 /* Build configuration list for PBXNativeTarget "DrivsUITests" */;
+			buildPhases = (
+				FF6CA9282476717900ECE3D8 /* Sources */,
+				FF6CA9292476717900ECE3D8 /* Frameworks */,
+				FF6CA92A2476717900ECE3D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF6CA92E2476717900ECE3D8 /* PBXTargetDependency */,
+			);
+			name = DrivsUITests;
+			productName = DrivsUITests;
+			productReference = FF6CA92C2476717900ECE3D8 /* DrivsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF6CA9032476717700ECE3D8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Muhammad Nobel Shidqi";
+				TargetAttributes = {
+					FF6CA90A2476717700ECE3D8 = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					FF6CA9202476717900ECE3D8 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = FF6CA90A2476717700ECE3D8;
+					};
+					FF6CA92B2476717900ECE3D8 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = FF6CA90A2476717700ECE3D8;
+					};
+				};
+			};
+			buildConfigurationList = FF6CA9062476717700ECE3D8 /* Build configuration list for PBXProject "Drivs" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF6CA9022476717700ECE3D8;
+			productRefGroup = FF6CA90C2476717700ECE3D8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF6CA90A2476717700ECE3D8 /* Drivs */,
+				FF6CA9202476717900ECE3D8 /* DrivsTests */,
+				FF6CA92B2476717900ECE3D8 /* DrivsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF6CA9092476717700ECE3D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6CA91B2476717900ECE3D8 /* LaunchScreen.storyboard in Resources */,
+				FF6CA9182476717900ECE3D8 /* Assets.xcassets in Resources */,
+				FF6CA9162476717700ECE3D8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CA91F2476717900ECE3D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CA92A2476717900ECE3D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF6CA9072476717700ECE3D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6CA9132476717700ECE3D8 /* ViewController.swift in Sources */,
+				FF6CA90F2476717700ECE3D8 /* AppDelegate.swift in Sources */,
+				FF6CA9112476717700ECE3D8 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CA91D2476717900ECE3D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6CA9262476717900ECE3D8 /* DrivsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF6CA9282476717900ECE3D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6CA9312476717900ECE3D8 /* DrivsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF6CA9232476717900ECE3D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF6CA90A2476717700ECE3D8 /* Drivs */;
+			targetProxy = FF6CA9222476717900ECE3D8 /* PBXContainerItemProxy */;
+		};
+		FF6CA92E2476717900ECE3D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF6CA90A2476717700ECE3D8 /* Drivs */;
+			targetProxy = FF6CA92D2476717900ECE3D8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF6CA9142476717700ECE3D8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF6CA9152476717700ECE3D8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FF6CA9192476717900ECE3D8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF6CA91A2476717900ECE3D8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF6CA9332476717900ECE3D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF6CA9342476717900ECE3D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF6CA9362476717900ECE3D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
+				INFOPLIST_FILE = Drivs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.Drivs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF6CA9372476717900ECE3D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
+				INFOPLIST_FILE = Drivs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.Drivs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FF6CA9392476717900ECE3D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
+				INFOPLIST_FILE = DrivsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.DrivsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Drivs.app/Drivs";
+			};
+			name = Debug;
+		};
+		FF6CA93A2476717900ECE3D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
+				INFOPLIST_FILE = DrivsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.DrivsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Drivs.app/Drivs";
+			};
+			name = Release;
+		};
+		FF6CA93C2476717900ECE3D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
+				INFOPLIST_FILE = DrivsUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.DrivsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Drivs;
+			};
+			name = Debug;
+		};
+		FF6CA93D2476717900ECE3D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
+				INFOPLIST_FILE = DrivsUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.DrivsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Drivs;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF6CA9062476717700ECE3D8 /* Build configuration list for PBXProject "Drivs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6CA9332476717900ECE3D8 /* Debug */,
+				FF6CA9342476717900ECE3D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF6CA9352476717900ECE3D8 /* Build configuration list for PBXNativeTarget "Drivs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6CA9362476717900ECE3D8 /* Debug */,
+				FF6CA9372476717900ECE3D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF6CA9382476717900ECE3D8 /* Build configuration list for PBXNativeTarget "DrivsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6CA9392476717900ECE3D8 /* Debug */,
+				FF6CA93A2476717900ECE3D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF6CA93B2476717900ECE3D8 /* Build configuration list for PBXNativeTarget "DrivsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF6CA93C2476717900ECE3D8 /* Debug */,
+				FF6CA93D2476717900ECE3D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF6CA9032476717700ECE3D8 /* Project object */;
+}
