@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>264429938377-1p65ri0gsldr00i3kfpg7if4uacru51e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.264429938377-1p65ri0gsldr00i3kfpg7if4uacru51e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCOgbJE2Ja3V0xw81Q23u57m7L59NSwfhE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>264429938377</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mnobelsh.Drivs</string>
+	<key>PROJECT_ID</key>
+	<string>drivs-ac798</string>
+	<key>STORAGE_BUCKET</key>
+	<string>drivs-ac798.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:264429938377:ios:44269da0c548df7f7e0f18</string>
+	<key>DATABASE_URL</key>
+	<string>https://drivs-ac798.firebaseio.com</string>
+</dict>
+</plist>
