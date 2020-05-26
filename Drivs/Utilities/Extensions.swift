@@ -95,28 +95,37 @@ extension UIView {
         self.layer.shadowRadius = 5
     }
     
-    func configureInputView(image: UIImage, textfield: UITextField? = nil) {
+    func configureInputView(image: UIImage, textfield: UITextField? = nil, segmentedControl: UISegmentedControl? = nil) {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
         
         self.addSubview(imageView)
         imageView.anchor(left: self.leftAnchor, paddingLeft: 8)
-        imageView.setCenterY(in: self)
         imageView.setSizeConstraint(width: 24, height: 24)
         imageView.tintColor = .lightGray
         
         if let tf = textfield {
+            self.setSizeConstraint(height: 55)
+            imageView.setCenterY(in: self)
             self.addSubview(tf)
             tf.textColor = .white
             tf.autocapitalizationType = .none
             tf.anchor(right: self.rightAnchor, left: imageView.rightAnchor, paddingLeft: 16)
             tf.setCenterY(in: self)
+            self.layer.borderWidth = 0.7
+            self.layer.borderColor = UIColor.lightGray.cgColor
+            self.layer.cornerRadius = 8
         }
         
-        self.layer.borderWidth = 0.7
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.cornerRadius = 8
+        if let sc = segmentedControl {
+            self.addSubview(sc)
+            imageView.anchor(top: self.topAnchor, paddingTop: 8)
+            sc.anchor(top: imageView.bottomAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+            self.setSizeConstraint(height: 90)
+        }
+        
+
     }
     
 }
@@ -144,6 +153,7 @@ extension UIButton {
             NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 22)!
         ])
         self.setAttributedTitle(attributedTitle, for: .normal)
+        self.setSizeConstraint(height: 55)
     }
 }
 

@@ -56,23 +56,40 @@ class SigninViewController: UIViewController {
         button.configureDefaultButton(title: "Sign In")
         return button
     }()
-    private lazy var inputFormStack: UIStackView = {
+    private lazy var signinFormStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailInputView,
                                                        passwordInputView,
                                                        signinButton])
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = 15
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         return stackView
     }()
-    
+    private let signupLink: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "Don't have an account ? ", attributes: [
+            NSAttributedString.Key.foregroundColor : UIColor.white,
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Light", size: 18)!
+        ])
+        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [
+            NSAttributedString.Key.foregroundColor : UIColor.originIndicator,
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 18)!
+        ]))
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.addTarget(self, action: #selector(handleSignupLink), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
+    // MARK: - Handler
+    @objc private func handleSignupLink() {
+        navigationController?.pushViewController(SignupViewController(), animated: true)
+    }
 
     // MARK: - Helper
     private func configureUI() {
@@ -81,14 +98,19 @@ class SigninViewController: UIViewController {
         navbar?.barStyle = .black
         view.backgroundColor = .baseColor
         
-        view.addSubview(inputFormStack)
-        inputFormStack.anchor(right: view.rightAnchor, left: view.leftAnchor, paddingRight: 30, paddingLeft: 30)
-        inputFormStack.setSizeConstraint(height: 200)
-        inputFormStack.setCenterXY(in: view)
+        view.addSubview(signinFormStack)
+        signinFormStack.anchor(right: view.rightAnchor, left: view.leftAnchor, paddingRight: 30, paddingLeft: 30)
+        signinFormStack.setCenterXY(in: view)
         
         view.addSubview(titleLabel)
-        titleLabel.anchor(bottom: inputFormStack.topAnchor, left: view.leftAnchor,  paddingBottom: 30, paddingLeft: 30 )
-
+        titleLabel.anchor(bottom: signinFormStack.topAnchor, left: view.leftAnchor,  paddingBottom: 30, paddingLeft: 30 )
+        
+        view.addSubview(signupLink)
+        signupLink.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor,paddingBottom: 15)
+        signupLink.setCenterX(in: view)
     }
+
+    
+    
 
 }
