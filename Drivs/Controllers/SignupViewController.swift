@@ -10,6 +10,7 @@ import UIKit
 
 class SignupViewController: UIViewController {
 
+    // MARK: - Properties
     private let titleLabel: UILabel = {
         let label = UILabel()
         
@@ -62,6 +63,7 @@ class SignupViewController: UIViewController {
         sc.backgroundColor = #colorLiteral(red: 0.819047749, green: 0.8261945844, blue: 0.8726840615, alpha: 1)
         sc.selectedSegmentTintColor = .themeColor
         sc.selectedSegmentIndex = 0
+        sc.setSizeConstraint(height: 45)
         return sc
     }()
     private lazy var emailInputView: UIView = {
@@ -84,9 +86,10 @@ class SignupViewController: UIViewController {
         view.configureInputView(image: UIImage(systemName: "lock.shield")!, textfield: confirmPasswordTextField)
         return view
     }()
-    private let signupButton: UIButton = {
+    private lazy var signupButton: UIButton = {
         let button = UIButton(type: .system)
         button.configureDefaultButton(title: "Sign Up")
+        button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         return button
     }()
     private lazy var signupFormStack: UIStackView = {
@@ -102,18 +105,61 @@ class SignupViewController: UIViewController {
         stackView.distribution = .fill
         return stackView
     }()
+    var isLoading: Bool = true
+    let locationManager = LocationHandler.shared.manager
+    let service = Services.shared
 
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
-    // MARK: - Helper
-    private func configureUI() {
-        view.backgroundColor = .baseColor
-        configureNavbar()
+    // MARK: - Handlers
+    @objc private func signUpButtonTapped() {
+        guard let email = emailTextField.text else {return}
+        guard let name = nameTextField.text else {return}
+        guard let fPassword = passwordTextField.text else {return}
+        guard let sPassword = confirmPasswordTextField.text else {return}
+        guard let latitude = locationManager?.location?.coordinate.latitude else {return}
+        guard let longitude = locationManager?.location?.coordinate.longitude else {return}
         
+        if checkPassword(password: fPassword, confirmationPassword: sPassword) {
+            let userData: [String : Any] = [
+                 K.Database.email : email,
+                 K.Database.name : name,
+                 K.Database.role : roleSegmentedControl.selectedSegmentIndex,
+                 K.Database.password : sPassword,
+                 K.Database.latitude : latitude,
+                 K.Database.longitude : longitude
+             ]
+
+            service.registerUser(user: userData) {
+                guard let homeVC = (self.presentingViewController as? UINavigationController)?.viewControllers.first as? HomeViewController else {return}
+                homeVC.configureUI()
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+
+    }
+    
+    // MARK: - Helpers
+    private func checkPassword(password: String,confirmationPassword: String) -> Bool {
+        if  password == confirmationPassword && (!password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !confirmationPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
+            return true
+        } else {
+            if password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                print("DEBUG : Password cannot be empty")
+            } else {
+                print("DEBUG : Password must be same")
+            }
+            return false
+        }
+    }
+    
+    private func configureUI() {
+        configureNavbar()
+        view.backgroundColor = .baseColor
         
         view.addSubview(signupFormStack)
         signupFormStack.anchor(right: view.rightAnchor, left: view.leftAnchor, paddingRight: 30, paddingLeft: 30)
@@ -124,8 +170,9 @@ class SignupViewController: UIViewController {
         
         view.addSubview(titleLabel)
         titleLabel.anchor(right: view.rightAnchor, bottom: signupFormStack.topAnchor, left: view.leftAnchor, paddingRight: 30, paddingBottom: 30, paddingLeft: 30)
+        
     }
-    
+
     private func configureNavbar() {
         let navbar = navigationController?.navigationBar
         navbar?.isHidden = false

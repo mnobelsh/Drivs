@@ -9,8 +9,8 @@ target 'Drivs' do
 pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
 pod 'Firebase/Storage'
-pod 'GeoFire', '~> 4.0'
 pod 'IQKeyboardManager'
+pod 'Geofirestore'
 
   target 'DrivsTests' do
     inherit! :search_paths

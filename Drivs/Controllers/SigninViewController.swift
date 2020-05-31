@@ -51,9 +51,10 @@ class SigninViewController: UIViewController {
         view.configureInputView(image: UIImage(systemName: "lock")!, textfield: passwordTextField)
         return view
     }()
-    private let signinButton: UIButton = {
+    private lazy var signinButton: UIButton = {
         let button = UIButton(type: .system)
         button.configureDefaultButton(title: "Sign In")
+        button.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
         return button
     }()
     private lazy var signinFormStack: UIStackView = {
@@ -81,17 +82,30 @@ class SigninViewController: UIViewController {
         return button
     }()
     
+    let service = Services.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
-    // MARK: - Handler
+    // MARK: - Handlers
+    @objc private func handleSignIn() {
+        guard let email = emailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        service.signIn(email: email, password: password) {
+            guard let homeVC = (self.presentingViewController as? UINavigationController)?.viewControllers.first as? HomeViewController else {return}
+            homeVC.configureUI()
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     @objc private func handleSignupLink() {
         navigationController?.pushViewController(SignupViewController(), animated: true)
     }
 
-    // MARK: - Helper
+    // MARK: - Helpers
     private func configureUI() {
         let navbar = navigationController?.navigationBar
         navbar?.isHidden =  true

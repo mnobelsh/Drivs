@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Drivs
 
 class DrivsTests: XCTestCase {
 

@@ -95,7 +95,7 @@ extension UIView {
         self.layer.shadowRadius = 5
     }
     
-    func configureInputView(image: UIImage, textfield: UITextField? = nil, segmentedControl: UISegmentedControl? = nil) {
+    func configureInputView(image: UIImage, imageColor: UIColor? = nil, textfield: UITextField? = nil) {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
@@ -103,28 +103,24 @@ extension UIView {
         self.addSubview(imageView)
         imageView.anchor(left: self.leftAnchor, paddingLeft: 8)
         imageView.setSizeConstraint(width: 24, height: 24)
-        imageView.tintColor = .lightGray
+        if let color = imageColor {
+            imageView.tintColor = color
+        } else {
+            imageView.tintColor = .lightGray
+        }
+        
         
         if let tf = textfield {
             self.setSizeConstraint(height: 55)
             imageView.setCenterY(in: self)
             self.addSubview(tf)
-            tf.textColor = .white
             tf.autocapitalizationType = .none
-            tf.anchor(right: self.rightAnchor, left: imageView.rightAnchor, paddingLeft: 16)
+            tf.anchor(right: self.rightAnchor, left: imageView.rightAnchor)
             tf.setCenterY(in: self)
             self.layer.borderWidth = 0.7
             self.layer.borderColor = UIColor.lightGray.cgColor
             self.layer.cornerRadius = 8
         }
-        
-        if let sc = segmentedControl {
-            self.addSubview(sc)
-            imageView.anchor(top: self.topAnchor, paddingTop: 8)
-            sc.anchor(top: imageView.bottomAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
-            self.setSizeConstraint(height: 90)
-        }
-        
 
     }
     
@@ -136,10 +132,11 @@ extension UITextField {
             NSAttributedString.Key.font : UIFont(name: "Avenir-Light", size: 18)!,
             NSAttributedString.Key.foregroundColor: UIColor.lightGray
         ])
+        self.textColor = #colorLiteral(red: 0.9325500727, green: 0.932706356, blue: 0.9325295091, alpha: 1)
         self.isSecureTextEntry = isSecureTextEntry
-        self.layer.borderWidth = 0.7
-        self.layer.borderColor = UIColor.darkGray.cgColor
-        self.layer.cornerRadius = 8
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.frame.height))
+        self.leftViewMode = .always
+        self.leftView = leftView
     }
 }
 
