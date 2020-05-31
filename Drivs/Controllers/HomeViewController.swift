@@ -13,7 +13,7 @@ import Firebase
 class HomeViewController: UIViewController {
 
     // MARK: - Properties
-    private let titleView: UIView = {
+    private var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .themeColor
         
@@ -54,15 +54,39 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let uid = Auth.auth().currentUser?.uid else {return}
-        service.getUser(withUID: uid) { (user) in
+        service.fetchUser(withUID: uid) { (user) in
             self.enableLocationService()
             self.inputLocationView.user = user
-            
         }
+        fetchDriversLocation()
     }
     
     
-    // MARK: - Services
+    // MARK: - Services=
+    private func fetchDriversLocation() {
+        guard let location = locationManager?.location else {return}
+        self.service.fetchDrivers(location: location) { (driver) in
+            guard let coordinate = driver.location?.coordinate else {return}
+            let driverAnnotation = DriverAnnotation(uid: driver.uid, coordinate: coordinate)
+
+            var isDriverVisible: Bool {
+                return self.mapView.annotations.contains(where: { (annotation) -> Bool in
+                    guard let anno = annotation as? DriverAnnotation else {return false}
+                    if anno.uid == driver.uid {
+                        anno.updateCoordinate(withCoordinate: coordinate)
+                        self.mapView.reloadInputViews()
+                        return true
+                    }
+                    return false
+                })
+            }
+        
+            if !isDriverVisible {
+                self.mapView.addAnnotation(driverAnnotation)
+            }
+        }
+    }
+    
     private func authenticateUser() {
         if Auth.auth().currentUser?.uid == nil {
             let signinVC = UINavigationController(rootViewController: SigninViewController())
@@ -88,6 +112,7 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - Helper
+
     private func configureTableView() {
         let tableView = inputLocationView.locationTableView
         tableView.dataSource = self
@@ -110,8 +135,7 @@ class HomeViewController: UIViewController {
     }
     
     func configureUI() {
-        navigationController?.navigationBar.barStyle = .black
-        overrideUserInterfaceStyle = .dark
+        navigationController?.navigationBar.barStyle = .default
         view.backgroundColor = .baseColor
         navigationController?.navigationBar.isHidden = true
         configureMapView()
@@ -137,19 +161,32 @@ class HomeViewController: UIViewController {
     
     private func configureMapView() {
         mapView = MKMapView()
+        mapView.delegate = self
         mapView.frame = view.frame
         mapView.showsUserLocation = true
         view.addSubview(mapView)
         mapView.anchor(top: view.topAnchor, right: view.rightAnchor, bottom: view.bottomAnchor, left: view.leftAnchor)
         mapView.setUserTrackingMode(.follow, animated: true)
+        
     }
 
 
 }
 
+// MARK: - Map View Delegate
+extension HomeViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? DriverAnnotation {
+            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "DriverAnnotation")
+            annotationView.image = UIImage(systemName: "car")?.withTintColor(.white)
+            return annotationView
+        }
+        return nil
+    }
+}
+
 // MARK: - Input Location View Delegate
 extension HomeViewController: InputLocationViewDelegate {
-
 
     func showMainInputLocationView() {
         configureTableView()
@@ -176,6 +213,15 @@ extension HomeViewController: InputLocationViewDelegate {
     
 }
 
+var originList: [[String:String]] = [
+    ["title": "Menteng Dalam", "description": "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"],
+    ["title": "Menteng Luar", "description": "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"],
+]
+
+var destinationList: [[String:String]] = [
+    ["title": "Cikini Raya", "description": "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"],
+]
+
 // MARK: - Tableview datasource & delegate
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -183,7 +229,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if section == 0 {
+            return originList.count
+        } else if section == 1 {
+            return destinationList.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -203,8 +254,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as? LocationTableCell else {return UITableViewCell()}
-        cell.titleLabel.text = "Menteng Dalam 4"
-        cell.descriptionLabel.text = "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"
+        var title: String = ""
+        var description: String = ""
+        if indexPath.section == 0 {
+            title = originList[indexPath.row]["title"]!
+            description = originList[indexPath.row]["description"]!
+        } else if indexPath.section == 1 {
+            title = destinationList[indexPath.row]["title"]!
+            description = destinationList[indexPath.row]["description"]!
+        }
+        cell.titleLabel.text = title
+        cell.descriptionLabel.text = description
         return cell
     }
 }

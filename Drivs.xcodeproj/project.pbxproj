@@ -12,6 +12,7 @@
 		DF338839EA4A1146B9BE2AD2 /* Pods_DrivsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E477AF6580539710FE9E9C1 /* Pods_DrivsTests.framework */; };
 		FF1969C4247D8BE400649410 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1969C3247D8BE400649410 /* User.swift */; };
 		FF38DFCF248384BA00BC07C2 /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38DFCE248384BA00BC07C2 /* LocationTableCell.swift */; };
+		FF38DFD32483A92000BC07C2 /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38DFD22483A92000BC07C2 /* DriverAnnotation.swift */; };
 		FF6CA90F2476717700ECE3D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA90E2476717700ECE3D8 /* AppDelegate.swift */; };
 		FF6CA9112476717700ECE3D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CA9102476717700ECE3D8 /* SceneDelegate.swift */; };
 		FF6CA9162476717700ECE3D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF6CA9142476717700ECE3D8 /* Main.storyboard */; };
@@ -59,6 +60,7 @@
 		FC5C3463950E726E0CFC3F1E /* Pods-DrivsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrivsTests.release.xcconfig"; path = "Target Support Files/Pods-DrivsTests/Pods-DrivsTests.release.xcconfig"; sourceTree = "<group>"; };
 		FF1969C3247D8BE400649410 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF38DFCE248384BA00BC07C2 /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
+		FF38DFD22483A92000BC07C2 /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
 		FF6CA90B2476717700ECE3D8 /* Drivs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drivs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6CA90E2476717700ECE3D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF6CA9102476717700ECE3D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				FF6CA9512477BB9C00ECE3D8 /* Collection Cell */,
 				FF6CA9142476717700ECE3D8 /* Main.storyboard */,
 				FF6CA94B2476772500ECE3D8 /* InputLocationView.swift */,
+				FF38DFD22483A92000BC07C2 /* DriverAnnotation.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				FF6CA948247671EB00ECE3D8 /* HomeViewController.swift in Sources */,
 				FF6CA94A2476721500ECE3D8 /* Extensions.swift in Sources */,
 				FF6CA90F2476717700ECE3D8 /* AppDelegate.swift in Sources */,
+				FF38DFD32483A92000BC07C2 /* DriverAnnotation.swift in Sources */,
 				FF6CA9112476717700ECE3D8 /* SceneDelegate.swift in Sources */,
 				FFC3267E247CF10D005F8365 /* Constants.swift in Sources */,
 				FF6CA946247671E400ECE3D8 /* SignupViewController.swift in Sources */,

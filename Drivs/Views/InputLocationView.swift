@@ -173,7 +173,7 @@ class InputLocationView: UIView {
         self.addSubview(mainView)
         mainView.anchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, paddingTop: 40)
         mainView.setRoundedCorners(corners: [.topLeft,.topRight], radius: 16)
-        mainView.addShadow(withColor: .themeColor)
+        mainView.addShadow(withColor: .darkGray)
         
         mainView.addSubview(inputBar)
         inputBar.anchor(top: mainView.topAnchor, right: mainView.rightAnchor, left: mainView.leftAnchor, paddingTop: 20, paddingRight: 20, paddingLeft: 20)

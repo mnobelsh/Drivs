@@ -18,6 +18,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
         super.init()
         manager = CLLocationManager()
         manager.delegate = self
+        manager.startUpdatingLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

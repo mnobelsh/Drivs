@@ -20,7 +20,7 @@ struct Services {
     static let shared = Services()
     private let geofirestore = GeoFirestore(collectionRef: GEOFIRE_REF)
     
-    func getUser(withUID uid: String, completion: @escaping(User) -> Void) {
+    func fetchUser(withUID uid: String, completion: @escaping(User) -> Void) {
         USER_REF.document(uid).addSnapshotListener { (documentSnapshot, error) in
             if let e = error {
                 print(e.localizedDescription)
@@ -32,10 +32,7 @@ struct Services {
             guard let email = data[K.Database.email] as? String else {return}
             guard let name = data[K.Database.name] as? String else {return}
             guard let role = data[K.Database.role] as? Int else {return}
-            
-            var user: User!
-            
-            
+
             if role == 1 {
                 GEOFIRE_REF.document(uid).addSnapshotListener { (locationSnapshot, error) in
                     if let e = error {
@@ -47,14 +44,12 @@ struct Services {
                     guard let location = locationData["l"] as? [CLLocationDegrees] else {return}
                     guard let latitude = location.first else {return}
                     guard let longitude = location.last else {return}
-                         
-                    user = User(email: email, name: name, role: role, latitude: latitude, longitude: longitude)
-                    completion(user)
+
+                    completion(User(uid: uid, email: email, name: name, role: role, latitude: latitude, longitude: longitude))
                 }
                 
             } else {
-                user = User(email: email, name: name, role: role)
-                completion(user)
+                completion( User(uid: uid, email: email, name: name, role: role))
             }
             
         }
@@ -127,4 +122,12 @@ struct Services {
         }
     }
     
+    func fetchDrivers(location: CLLocation, completion: @escaping(User) -> Void ) {
+        let _ = geofirestore.query(withCenter: location, radius: 40).observe(.documentEntered) { (uid, location) in
+            guard let userID = uid else {return}
+            self.fetchUser(withUID: userID) { (user) in
+                completion(user)
+            }
+        }
+    }
 }

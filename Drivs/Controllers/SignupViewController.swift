@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class SignupViewController: UIViewController {
 
@@ -113,18 +114,22 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        print("DEBUG \(CLLocationManager.authorizationStatus().rawValue)")
     }
     
     // MARK: - Handlers
     @objc private func signUpButtonTapped() {
+        
         guard let email = emailTextField.text else {return}
         guard let name = nameTextField.text else {return}
         guard let fPassword = passwordTextField.text else {return}
         guard let sPassword = confirmPasswordTextField.text else {return}
         guard let latitude = locationManager?.location?.coordinate.latitude else {return}
         guard let longitude = locationManager?.location?.coordinate.longitude else {return}
+
         
-        if checkPassword(password: fPassword, confirmationPassword: sPassword) {
+        
+        if checkPassword(password: fPassword, confirmationPassword: sPassword) && !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             let userData: [String : Any] = [
                  K.Database.email : email,
                  K.Database.name : name,
@@ -133,7 +138,7 @@ class SignupViewController: UIViewController {
                  K.Database.latitude : latitude,
                  K.Database.longitude : longitude
              ]
-
+            
             service.registerUser(user: userData) {
                 guard let homeVC = (self.presentingViewController as? UINavigationController)?.viewControllers.first as? HomeViewController else {return}
                 homeVC.configureUI()

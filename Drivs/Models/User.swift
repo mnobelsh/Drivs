@@ -10,12 +10,14 @@ import Foundation
 import CoreLocation
 
 struct User {
+    var uid: String
     var name: String
     var email: String
     var role: String
     var location: CLLocation?
     
-    init(email: String, name: String, role: Int, latitude: CLLocationDegrees? = nil, longitude: CLLocationDegrees? = nil) {
+    init(uid: String , email: String, name: String, role: Int, latitude: CLLocationDegrees? = nil, longitude: CLLocationDegrees? = nil) {
+        self.uid = uid
         self.email = email
         self.name = name
         if role == 0 {

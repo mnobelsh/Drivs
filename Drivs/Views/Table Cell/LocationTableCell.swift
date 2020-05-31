@@ -33,9 +33,10 @@ class LocationTableCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         self.backgroundColor = .clear
         self.addSubview(cellLabelStack)
-        cellLabelStack.anchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 16)
+        cellLabelStack.anchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 20)
     }
     
     required init?(coder: NSCoder) {
