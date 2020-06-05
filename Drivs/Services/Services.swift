@@ -28,7 +28,6 @@ struct Services {
             }
         
             guard let data = documentSnapshot?.data() else {return}
-   
             guard let email = data[K.Database.email] as? String else {return}
             guard let name = data[K.Database.name] as? String else {return}
             guard let role = data[K.Database.role] as? Int else {return}
@@ -41,11 +40,11 @@ struct Services {
                     }
                    
                     guard let locationData = locationSnapshot?.data() else {return}
-                    guard let location = locationData["l"] as? [CLLocationDegrees] else {return}
-                    guard let latitude = location.first else {return}
-                    guard let longitude = location.last else {return}
-
-                    completion(User(uid: uid, email: email, name: name, role: role, latitude: latitude, longitude: longitude))
+                    guard let latitude = (locationData["l"] as? [CLLocationDegrees])?.first else {return}
+                    guard let longitude = (locationData["l"] as? [CLLocationDegrees])?.last else {return}
+                    let location = CLLocation(latitude: latitude, longitude: longitude)
+                    
+                    completion(User(uid: uid, email: email, name: name, role: role, location: location))
                 }
                 
             } else {
@@ -70,8 +69,7 @@ struct Services {
         guard let email = user[K.Database.email] as? String else {return}
         guard let password = user[K.Database.password] as? String else {return}
         guard let role = user[K.Database.role] as? Int else {return}
-        guard let latitude = user[K.Database.latitude] as? CLLocationDegrees else {return}
-        guard let longitude = user[K.Database.longitude] as? CLLocationDegrees else {return}
+        guard let location = user[K.Database.location] as? CLLocation else {return}
 
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let e = error {
@@ -86,20 +84,17 @@ struct Services {
                 "role": role,
             ]
             USER_REF.document(uid).setData(userData) { (error) in
-                print("DEBUG : save to db")
                 if let err = error {
                     print(err.localizedDescription)
                     return
                 }
                 
                 if role == 1 {
-                    print("DEBUG : user uid \(uid)")
-                    self.geofirestore.setLocation(location: CLLocation(latitude: latitude, longitude: longitude), forDocumentWithID: uid) { (error) in
+                    self.geofirestore.setLocation(location: location, forDocumentWithID: uid) { (error) in
                         if let err = error {
                             print("DEBUG : geofire error \(err)")
                             return
                         }
-                        print("DEBUG : Driver location added.")
                         completion()
                     }
                 } else {
@@ -123,7 +118,7 @@ struct Services {
     }
     
     func fetchDrivers(location: CLLocation, completion: @escaping(User) -> Void ) {
-        let _ = geofirestore.query(withCenter: location, radius: 40).observe(.documentEntered) { (uid, location) in
+        let _ = geofirestore.query(withCenter: location, radius: 5.0).observe(.documentEntered) { (uid, location) in
             guard let userID = uid else {return}
             self.fetchUser(withUID: userID) { (user) in
                 completion(user)

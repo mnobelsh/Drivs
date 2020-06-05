@@ -9,25 +9,29 @@
 import Foundation
 import CoreLocation
 
+enum UserRole {
+    case driver,rider
+}
+
 struct User {
     var uid: String
     var name: String
     var email: String
-    var role: String
+    var role: UserRole
     var location: CLLocation?
     
-    init(uid: String , email: String, name: String, role: Int, latitude: CLLocationDegrees? = nil, longitude: CLLocationDegrees? = nil) {
+    init(uid: String , email: String, name: String, role: Int, location: CLLocation? = nil) {
         self.uid = uid
         self.email = email
         self.name = name
         if role == 0 {
-            self.role = "Rider"
+            self.role = .rider
         } else {
-            self.role = "Driver"
+            self.role = .driver
         }
         
-        if let latitude = latitude, let longitude = longitude {
-            self.location = CLLocation(latitude: latitude, longitude: longitude)
+        if let loc = location {
+            self.location = loc
         }
     }
     

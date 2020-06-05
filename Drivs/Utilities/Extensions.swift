@@ -121,7 +121,6 @@ extension UIView {
             self.layer.borderColor = UIColor.lightGray.cgColor
             self.layer.cornerRadius = 8
         }
-
     }
     
 }

@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import MapKit
 
 class LocationTableCell: UITableViewCell {
     
-    var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir-Heavy", size: 16)
         label.textColor = .black
         return label
     }()
-    var descriptionLabel: UILabel = {
+    private var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir-Light", size: 14)
         label.textColor = .darkGray
@@ -30,6 +31,12 @@ class LocationTableCell: UITableViewCell {
         stack.axis = .vertical
         return stack
     }()
+    var mapItem: MKMapItem? {
+        didSet {
+            self.titleLabel.text = mapItem?.name
+            self.descriptionLabel.text = mapItem?.placemark.title
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,5 +50,5 @@ class LocationTableCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
 }
+

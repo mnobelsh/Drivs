@@ -81,30 +81,34 @@ class InputLocationView: UIView {
         return view
     }()
     
-    private let originTextField: UITextField = {
-        let tf = UITextField()
+    let originTextField: UITextField = {
+    let tf = UITextField()
+        tf.returnKeyType = .search
+        tf.clearButtonMode = .whileEditing
         tf.configureInputTextField(placeholder: "Your origin...", isSecureTextEntry: false)
         tf.setSizeConstraint(height: 55)
         tf.textColor = .darkGray
-        return tf
-    }()
+    return tf
+}()
     private lazy var inputOriginView: UIView = {
         let view = UIView()
         view.configureInputView(image: UIImage(systemName: "smallcircle.fill.circle")!, imageColor: .originIndicator, textfield: originTextField)
-        view.backgroundColor = #colorLiteral(red: 0.9340569973, green: 0.9342134595, blue: 0.9340363145, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9513661265, green: 0.9515252709, blue: 0.9513451457, alpha: 1)
         return view
     }()
-    private let destinationTextField: UITextField = {
-        let tf = UITextField()
-        tf.configureInputTextField(placeholder: "Your destination...", isSecureTextEntry: false)
-        tf.setSizeConstraint(height: 55)
-        tf.textColor = .darkGray
-        return tf
-    }()
+    let destinationTextField: UITextField = {
+    let tf = UITextField()
+    tf.returnKeyType = .search
+    tf.clearButtonMode = .whileEditing
+    tf.configureInputTextField(placeholder: "Your destination...", isSecureTextEntry: false)
+    tf.setSizeConstraint(height: 55)
+    tf.textColor = .darkGray
+    return tf
+}()
     private lazy var inputDestinationView: UIView = {
         let view = UIView()
         view.configureInputView(image: UIImage(systemName: "smallcircle.fill.circle")!, imageColor: .destinationIndicator, textfield: destinationTextField)
-        view.backgroundColor = #colorLiteral(red: 0.9340569973, green: 0.9342134595, blue: 0.9340363145, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9513661265, green: 0.9515252709, blue: 0.9513451457, alpha: 1)
         return view
     }()
     
@@ -150,7 +154,6 @@ class InputLocationView: UIView {
         tv.tableFooterView = UIView()
         return tv
     }()
-    
 
     var user: User? {
         didSet {

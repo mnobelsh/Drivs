@@ -23,6 +23,5 @@ class DriverAnnotation: NSObject, MKAnnotation {
         UIView.animate(withDuration: 0.2) {
              self.coordinate = coordinate
         }
-       
     }
 }

@@ -14,6 +14,7 @@ struct K {
         static let password = "password"
         static let name = "name"
         static let role = "role"
+        static let location = "location"
         static let latitude = "latitude"
         static let longitude = "longitude"
         

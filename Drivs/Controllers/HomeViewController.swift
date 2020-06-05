@@ -37,13 +37,27 @@ class HomeViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setAttributedTitle(NSAttributedString(string: "Sign Out", attributes: [
             NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 12)!]), for: .normal)
-        button.titleLabel?.textColor = .white
+        button.titleLabel?.textColor = .darkGray
         button.addTarget(self, action: #selector(signOutButtonHandler), for: .touchUpInside)
         return button
     }()
-
+    private let menuButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "line.horizontal.3")!.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }()
+    
     private let locationManager = LocationHandler.shared.manager
     let service = Services.shared
+    private var currentUser: User? {
+        didSet {
+            inputLocationView.user = currentUser
+        }
+    }
+    
+    var locationResult: [MKMapItem] = []
+    var lastEditedTextfield: UITextField?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -51,24 +65,25 @@ class HomeViewController: UIViewController {
         authenticateUser()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    // MARK: - Services
+    private func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         service.fetchUser(withUID: uid) { (user) in
-            self.enableLocationService()
-            self.inputLocationView.user = user
+            DispatchQueue.main.async {
+                self.currentUser = user
+                self.enableLocationService()
+                self.currentUser!.role == .rider ? self.fetchDriversLocation() : nil
+            }
         }
-        fetchDriversLocation()
     }
     
-    
-    // MARK: - Services=
     private func fetchDriversLocation() {
         guard let location = locationManager?.location else {return}
+        
         self.service.fetchDrivers(location: location) { (driver) in
             guard let coordinate = driver.location?.coordinate else {return}
             let driverAnnotation = DriverAnnotation(uid: driver.uid, coordinate: coordinate)
-
             var isDriverVisible: Bool {
                 return self.mapView.annotations.contains(where: { (annotation) -> Bool in
                     guard let anno = annotation as? DriverAnnotation else {return false}
@@ -80,7 +95,7 @@ class HomeViewController: UIViewController {
                     return false
                 })
             }
-        
+       
             if !isDriverVisible {
                 self.mapView.addAnnotation(driverAnnotation)
             }
@@ -93,11 +108,17 @@ class HomeViewController: UIViewController {
             signinVC.modalPresentationStyle = .fullScreen
             present(signinVC, animated: true, completion: nil)
         } else {
-            self.configureUI()
+            self.configure()
         }
     }
     
     // MARK: - Handler
+    func configure() {
+        configureUI()
+        fetchUser()
+        fetchDriversLocation()
+    }
+    
     @objc private func trackUserLocationInMap() {
         mapView.setUserTrackingMode(.follow, animated: true)
     }
@@ -118,6 +139,7 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(LocationTableCell.self, forCellReuseIdentifier: "LocationCell")
+        tableView.reloadData()
     }
     
     private func enableLocationService() {
@@ -140,6 +162,7 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         configureMapView()
         
+
         view.addSubview(titleView)
         titleView.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         titleView.setSizeConstraint(width: 90, height: 33)
@@ -148,14 +171,21 @@ class HomeViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(trackUserLocationInMap))
         titleView.addGestureRecognizer(tapGesture)
         
+        view.addSubview(menuButton)
+        menuButton.anchor(left: view.leftAnchor, paddingLeft: 20)
+        menuButton.setCenterY(in: titleView)
+        menuButton.setSizeConstraint(width: 33, height: 33)
+        
         view.addSubview(inputLocationView)
         inputLocationView.delegate = self
+        inputLocationView.originTextField.delegate = self
+        inputLocationView.destinationTextField.delegate = self
         inputLocationView.frame = CGRect(x: 0, y: view.frame.height - inputLocationViewHeight, width: view.frame.width, height: inputLocationViewHeight)
         
-        view.addSubview(signoutButton)
-        signoutButton.setCenterY(in: titleView)
-        signoutButton.anchor(right: view.rightAnchor, paddingRight: 8)
-        signoutButton.setSizeConstraint(width: 60, height: 33)
+//        view.addSubview(signoutButton)
+//        signoutButton.setCenterY(in: titleView)
+//        signoutButton.anchor(right: view.rightAnchor, paddingRight: 8)
+//        signoutButton.setSizeConstraint(width: 60, height: 33)
         
     }
     
@@ -178,9 +208,10 @@ extension HomeViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? DriverAnnotation {
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "DriverAnnotation")
-            annotationView.image = UIImage(systemName: "car")?.withTintColor(.white)
+            annotationView.image = UIImage(systemName: "car")!
             return annotationView
         }
+        
         return nil
     }
 }
@@ -202,6 +233,7 @@ extension HomeViewController: InputLocationViewDelegate {
     }
     
     func closeInputLocationView(_ completion: @escaping () -> Void) {
+        locationResult = []
         UIView.animate(withDuration: 0.3, animations: {
             self.inputLocationView.frame.origin.y = self.view.frame.height - self.inputLocationViewHeight
         }) { (_) in
@@ -210,17 +242,7 @@ extension HomeViewController: InputLocationViewDelegate {
         }
     }
     
-    
 }
-
-var originList: [[String:String]] = [
-    ["title": "Menteng Dalam", "description": "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"],
-    ["title": "Menteng Luar", "description": "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"],
-]
-
-var destinationList: [[String:String]] = [
-    ["title": "Cikini Raya", "description": "Jalan Medan Merdeka Barat, Menteng, Jakarta, Indonesia"],
-]
 
 // MARK: - Tableview datasource & delegate
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -229,12 +251,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return originList.count
-        } else if section == 1 {
-            return destinationList.count
-        }
-        return 0
+        return section == 1 ? locationResult.count : 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -254,19 +271,69 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as? LocationTableCell else {return UITableViewCell()}
-        var title: String = ""
-        var description: String = ""
-        if indexPath.section == 0 {
-            title = originList[indexPath.row]["title"]!
-            description = originList[indexPath.row]["description"]!
-        } else if indexPath.section == 1 {
-            title = destinationList[indexPath.row]["title"]!
-            description = destinationList[indexPath.row]["description"]!
-        }
-        cell.titleLabel.text = title
-        cell.descriptionLabel.text = description
+        cell.mapItem = indexPath.section == 1 ? locationResult[indexPath.row] : nil
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let attributedText = NSMutableAttributedString(string: locationResult[indexPath.row].name!, attributes: [
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 16)!,
+            NSAttributedString.Key.foregroundColor : UIColor.black])
+        attributedText.append(NSAttributedString(string: " | \(locationResult[indexPath.row].placemark.title!)", attributes: [
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Light", size: 12)!,
+            NSAttributedString.Key.foregroundColor : UIColor.lightGray]))
+        guard let tf = lastEditedTextfield else {return}
+        tf.attributedText = attributedText
+        
+        let selectedLocation = locationResult[indexPath.row]
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = selectedLocation.placemark.coordinate
+        mapView.addAnnotation(annotation)
     }
 }
 
+// MARK: - Location Textfield Delegate
+extension HomeViewController: UITextFieldDelegate {
+    
+    private func requestLocation(withQuery query: String, completion: @escaping([MKMapItem]) -> Void) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        request.region = mapView.region
+        
+        MKLocalSearch(request: request).start { (response, error) in
+            if let e = error {
+                print("DEBUG : Error Search \(e.localizedDescription)")
+                return
+            }
+            guard let res = response else {return}
+            var results: [MKMapItem] = []
+            res.mapItems.forEach { (item) in
+                results.append(item)
+            }
+            completion(results)
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let query = textField.text else {return false}
+        
+        requestLocation(withQuery: query) { (results) in
+            DispatchQueue.main.async {
+                if textField == self.inputLocationView.originTextField {
+                    self.locationResult = results
+                } else if textField == self.inputLocationView.destinationTextField {
+                    self.locationResult = results
+                }
+                self.inputLocationView.locationTableView.reloadData()
+            }
+        }
+        
+        lastEditedTextfield = textField
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+
+}
 

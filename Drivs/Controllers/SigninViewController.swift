@@ -96,7 +96,7 @@ class SigninViewController: UIViewController {
         
         service.signIn(email: email, password: password) {
             guard let homeVC = (self.presentingViewController as? UINavigationController)?.viewControllers.first as? HomeViewController else {return}
-            homeVC.configureUI()
+            homeVC.configure()
             self.dismiss(animated: true, completion: nil)
         }
     }

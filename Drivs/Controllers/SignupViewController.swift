@@ -114,7 +114,6 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        print("DEBUG \(CLLocationManager.authorizationStatus().rawValue)")
     }
     
     // MARK: - Handlers
@@ -124,10 +123,7 @@ class SignupViewController: UIViewController {
         guard let name = nameTextField.text else {return}
         guard let fPassword = passwordTextField.text else {return}
         guard let sPassword = confirmPasswordTextField.text else {return}
-        guard let latitude = locationManager?.location?.coordinate.latitude else {return}
-        guard let longitude = locationManager?.location?.coordinate.longitude else {return}
-
-        
+        guard let location = locationManager?.location else {return}
         
         if checkPassword(password: fPassword, confirmationPassword: sPassword) && !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             let userData: [String : Any] = [
@@ -135,13 +131,12 @@ class SignupViewController: UIViewController {
                  K.Database.name : name,
                  K.Database.role : roleSegmentedControl.selectedSegmentIndex,
                  K.Database.password : sPassword,
-                 K.Database.latitude : latitude,
-                 K.Database.longitude : longitude
+                 K.Database.location : location
              ]
             
             service.registerUser(user: userData) {
                 guard let homeVC = (self.presentingViewController as? UINavigationController)?.viewControllers.first as? HomeViewController else {return}
-                homeVC.configureUI()
+                homeVC.configure()
                 self.dismiss(animated: true, completion: nil)
             }
         }
