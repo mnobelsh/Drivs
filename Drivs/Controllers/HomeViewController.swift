@@ -41,10 +41,11 @@ class HomeViewController: UIViewController {
         button.addTarget(self, action: #selector(signOutButtonHandler), for: .touchUpInside)
         return button
     }()
-    private let menuButton: UIButton = {
+    private let topLeftButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "line.horizontal.3")!.withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleTopLeftButton), for: .touchUpInside)
         return button
     }()
     
@@ -58,6 +59,12 @@ class HomeViewController: UIViewController {
     
     var locationResult: [MKMapItem] = []
     var lastEditedTextfield: UITextField?
+    
+    private enum ButtonActionType {
+        case locationDidSelect, menuView
+    }
+    private var topLeftButtonType: ButtonActionType = .menuView
+    private var route: MKRoute?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -132,7 +139,67 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc private func handleTopLeftButton() {
+        switch topLeftButtonType {
+        case .locationDidSelect:
+            self.configureInputLocationView()
+            self.inputLocationView.removeInputLocationView()
+            self.inputLocationView.configureGreetingView()
+            removeAnnotationsAndOverlays()
+            configureDismissalAction(action: .menuView)
+            
+        case .menuView:
+            print("DEBUG : Open left menu pane")
+            
+        }
+    }
+    
     // MARK: - Helper
+    private func removeAnnotationsAndOverlays() {
+        self.mapView.annotations.forEach { (annotation) in
+            if let anno = annotation as? MKPointAnnotation {
+                mapView.removeAnnotation(anno)
+            }
+        }
+        if mapView.overlays.count > 0 {
+            mapView.removeOverlay(mapView.overlays.first!)
+        }
+    }
+    
+    private func configurePolyline(forDestination destination: MKMapItem) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = destination
+        request.transportType = .automobile
+
+        
+        let directions = MKDirections(request: request)
+        directions.calculate { (response, error) in
+            if let e = error {
+                print("DEBUG : error \(e)")
+                return
+            }
+            guard let route = response?.routes.first else {return}
+            self.route = route
+            self.mapView.addOverlay(route.polyline)
+        }
+    }
+    
+    private func configureDismissalAction(action: ButtonActionType) {
+        switch action {
+        case .menuView:
+            topLeftButtonType = .menuView
+            self.topLeftButton.setImage(UIImage(systemName: "line.horizontal.3")!.withRenderingMode(.alwaysOriginal), for: .normal)
+
+        case .locationDidSelect:
+            topLeftButtonType = .locationDidSelect
+            self.topLeftButton.setImage(UIImage(systemName: "arrow.left")!.withRenderingMode(.alwaysOriginal), for: .normal)
+            closeInputLocationView {
+                self.inputLocationView.removeFromSuperview()
+            }
+            
+        }
+    }
 
     private func configureTableView() {
         let tableView = inputLocationView.locationTableView
@@ -171,16 +238,12 @@ class HomeViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(trackUserLocationInMap))
         titleView.addGestureRecognizer(tapGesture)
         
-        view.addSubview(menuButton)
-        menuButton.anchor(left: view.leftAnchor, paddingLeft: 20)
-        menuButton.setCenterY(in: titleView)
-        menuButton.setSizeConstraint(width: 33, height: 33)
+        view.addSubview(topLeftButton)
+        topLeftButton.anchor(left: view.leftAnchor, paddingLeft: 20)
+        topLeftButton.setCenterY(in: titleView)
+        topLeftButton.setSizeConstraint(width: 33, height: 33)
         
-        view.addSubview(inputLocationView)
-        inputLocationView.delegate = self
-        inputLocationView.originTextField.delegate = self
-        inputLocationView.destinationTextField.delegate = self
-        inputLocationView.frame = CGRect(x: 0, y: view.frame.height - inputLocationViewHeight, width: view.frame.width, height: inputLocationViewHeight)
+        configureInputLocationView()
         
 //        view.addSubview(signoutButton)
 //        signoutButton.setCenterY(in: titleView)
@@ -199,6 +262,14 @@ class HomeViewController: UIViewController {
         mapView.setUserTrackingMode(.follow, animated: true)
         
     }
+    
+    private func configureInputLocationView() {
+        view.addSubview(inputLocationView)
+        inputLocationView.delegate = self
+        inputLocationView.originTextField.delegate = self
+        inputLocationView.destinationTextField.delegate = self
+        inputLocationView.frame = CGRect(x: 0, y: view.frame.height - inputLocationViewHeight, width: view.frame.width, height: inputLocationViewHeight)
+    }
 
 
 }
@@ -214,6 +285,17 @@ extension HomeViewController: MKMapViewDelegate {
         
         return nil
     }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let route = self.route {
+            print("DEBUG : polylinerenderer \(route.polyline)")
+            let polylineRenderer = MKPolylineRenderer(polyline: route.polyline)
+            polylineRenderer.lineWidth = 3
+            polylineRenderer.strokeColor = .systemBlue
+            return polylineRenderer
+        }
+        return MKOverlayRenderer()
+    }
 }
 
 // MARK: - Input Location View Delegate
@@ -227,19 +309,26 @@ extension HomeViewController: InputLocationViewDelegate {
             self.inputLocationView.frame = CGRect(x: 0, y: self.view.frame.height - height, width: self.view.frame.width, height: height)
             self.inputLocationView.frame.origin.y = yPosition
         }) { (_) in
-            
         }
         
     }
     
-    func closeInputLocationView(_ completion: @escaping () -> Void) {
+    private func closeInputLocationView(completion: (() ->Void)?) {
         locationResult = []
         UIView.animate(withDuration: 0.3, animations: {
             self.inputLocationView.frame.origin.y = self.view.frame.height - self.inputLocationViewHeight
         }) { (_) in
             self.inputLocationView.frame = CGRect(x: 0, y: self.view.frame.height - self.inputLocationViewHeight, width: self.view.frame.width, height: self.inputLocationViewHeight)
-            completion()
+            if let comp = completion {
+                comp()
+            }
         }
+
+    }
+    
+    func dismissInputLocationView(_ completion: @escaping () -> Void) {
+        configureDismissalAction(action: .menuView)
+        closeInputLocationView(completion: completion)
     }
     
 }
@@ -251,28 +340,29 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 1 ? locationResult.count : 0
+        if section == 0 {
+            return 2
+        }
+        return locationResult.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 1 {
-            let view = UIView()
-            view.backgroundColor = #colorLiteral(red: 0.8560581803, green: 0.8562023044, blue: 0.8560392261, alpha: 1)
-            return view
-        }
-        return UIView()
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.8560581803, green: 0.8562023044, blue: 0.8560392261, alpha: 1)
+        return view
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        }
         return CGFloat(45)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as? LocationTableCell else {return UITableViewCell()}
-        cell.mapItem = indexPath.section == 1 ? locationResult[indexPath.row] : nil
-        return cell
+        if indexPath.section == 1, !locationResult.isEmpty {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as? LocationTableCell else {return UITableViewCell()}
+            cell.mapItem = locationResult[indexPath.row]
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -286,9 +376,16 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         tf.attributedText = attributedText
         
         let selectedLocation = locationResult[indexPath.row]
+        
+        configurePolyline(forDestination: selectedLocation)
+        
         let annotation = MKPointAnnotation()
         annotation.coordinate = selectedLocation.placemark.coordinate
         mapView.addAnnotation(annotation)
+        mapView.selectAnnotation(annotation, animated: true)
+        configureDismissalAction(action: .locationDidSelect)
+        self.mapView.centerCoordinate = annotation.coordinate
+        
     }
 }
 

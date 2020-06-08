@@ -11,7 +11,7 @@ import UIKit
 
 protocol InputLocationViewDelegate {
     func showMainInputLocationView()
-    func closeInputLocationView(_ completion: @escaping() -> Void)
+    func dismissInputLocationView(_ completion: @escaping() -> Void)
 }
 
 class InputLocationView: UIView {
@@ -212,7 +212,9 @@ class InputLocationView: UIView {
         
     }
     
-    private func removeInputLocationView() {
+    func removeInputLocationView() {
+        self.inputBar.alpha = 1
+        closeButton.removeFromSuperview()
         inputLocationStack.removeFromSuperview()
         originTextField.text?.removeAll()
         destinationTextField.text?.removeAll()
@@ -230,11 +232,9 @@ class InputLocationView: UIView {
     }
 
     @objc private func handleCloseButton() {
-        delegate?.closeInputLocationView {
+        delegate?.dismissInputLocationView {
             self.configureGreetingView()
         }
-        self.inputBar.alpha = 1
-        closeButton.removeFromSuperview()
         removeInputLocationView()
     }
     
